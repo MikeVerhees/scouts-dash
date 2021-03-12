@@ -1,6 +1,8 @@
 import * as React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { useAuth, useUser } from 'reactfire';
+import './Auth.css';
+import { Button } from '@material-ui/core';
 const signOut = (auth: any) =>
   auth.signOut().then(() => console.log('signed out'));
 
@@ -28,15 +30,10 @@ const UserDetails = ({ user }: { user: any }) => {
   return (
     <>
       <div title='Displayname'>{user.displayName}</div>
-      <div title='Providers'>
-        <ul>
-          {user.providerData.map((profile: any) => (
-            <li key={profile.providerId}>{profile.providerId}</li>
-          ))}
-        </ul>
-      </div>
       <div title='Sign Out'>
-        <button onClick={() => signOut(auth)}>Sign Out</button>
+        <Button color='secondary' onClick={() => signOut(auth)}>
+          Sign Out
+        </Button>
       </div>
     </>
   );
@@ -85,7 +82,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div title='Sign-in form'>
+    <div className='login-wrapper' title='Sign-in form'>
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth()} />
     </div>
   );
