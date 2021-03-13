@@ -7,45 +7,45 @@ import { Members } from './Members/Members';
 
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { AuthCheck } from 'reactfire';
+import IconButton from '@material-ui/core/IconButton';
+import { Group } from '@material-ui/icons';
 
 function App() {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
+    <Router>
+      <div className='App'>
+        <header className='App-header'>
+          <Link to='/'>
+            <img src={logo} className='App-logo' alt='logo' />
+          </Link>
+          <nav>
+            <AuthCheck fallback=''>
+              <Link to='/members'>
+                <IconButton color='secondary' aria-label='members'>
+                  <Group />
+                </IconButton>
+              </Link>
+            </AuthCheck>
+          </nav>
+          <Auth></Auth>
+        </header>
 
-        <Auth></Auth>
-      </header>
-      <body>
-        <Router>
-          <div>
-            <nav>
-              <ul>
-                <li>
-                  <Link to='/'>Home</Link>
-                </li>
-                <li>
-                  <Link to='/members'>Members</Link>
-                </li>
-              </ul>
-            </nav>
-
-            {/* A <Switch> looks through its children <Route>s and
+        <div>
+          {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-            <Switch>
-              <Route path='/members'>
-                <AuthCheck fallback='Home'>
-                  <Members />
-                </AuthCheck>
-              </Route>
-              <Route path='/'>
-                <Home />
-              </Route>
-            </Switch>
-          </div>
-        </Router>
-      </body>
-    </div>
+          <Switch>
+            <Route path='/members'>
+              <AuthCheck fallback='Home'>
+                <Members />
+              </AuthCheck>
+            </Route>
+            <Route path='/'>
+              <Home />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </Router>
   );
 }
 

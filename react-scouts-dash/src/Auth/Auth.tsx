@@ -6,24 +6,6 @@ import { Button } from '@material-ui/core';
 const signOut = (auth: any) =>
   auth.signOut().then(() => console.log('signed out'));
 
-export const AuthWrapper = ({
-  children,
-  fallback,
-}: React.PropsWithChildren<{ fallback: JSX.Element }>): JSX.Element => {
-  const { status, data: user, hasEmitted } = useUser();
-
-  if (!children) {
-    throw new Error('Children must be provided');
-  }
-  if (status === 'loading' || hasEmitted === false) {
-    return <div></div>;
-  } else if (user) {
-    return children as JSX.Element;
-  }
-
-  return fallback;
-};
-
 const UserDetails = ({ user }: { user: any }) => {
   const auth = useAuth();
 
