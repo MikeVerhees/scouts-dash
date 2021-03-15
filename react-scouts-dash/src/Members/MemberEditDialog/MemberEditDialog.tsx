@@ -6,7 +6,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import React from 'react';
 import { Member } from '../../interfaces';
-import { render } from '@testing-library/react';
 
 type Props = {
   member: Member;
