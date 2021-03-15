@@ -62,20 +62,26 @@ type State = {
 class MemberList extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
+
     this.state = {
       selectedMember: {} as Member,
       name: '',
       open: false,
     };
   }
-  handleClickOpen = (member: Member) => {
+
+  handleEditOpen = (member: Member) => {
+    console.log('open');
+    this.setState({ open: true, selectedMember: member, name: member.name });
+  };
+  OpenDetails = (member: Member) => {
     console.log('open');
     this.setState({ open: true, selectedMember: member, name: member.name });
   };
   render() {
     console.log('this.props', this.props);
 
-    const handleClose = (result: any) => {
+    const handleEditClose = (result: any) => {
       console.log('result', result);
       this.setState({ open: false });
 
@@ -90,14 +96,17 @@ class MemberList extends React.Component<Props, State> {
 
     return (
       <>
+        <div>
+          <h2>Leden</h2>
+        </div>
         <List>
           {this.props.members.map((member: Member) => {
             return (
-              <ListItem key={member.id}>
+              <ListItem onClick={() => this.OpenDetails(member)}>
                 <ListItemText primary={member.name} />
                 <ListItemSecondaryAction>
                   <IconButton
-                    onClick={() => this.handleClickOpen(member)}
+                    onClick={() => this.handleEditOpen(member)}
                     edge='end'
                     aria-label='edit'
                   >
@@ -111,7 +120,7 @@ class MemberList extends React.Component<Props, State> {
         <MemberEditDialog
           member={this.state.selectedMember}
           open={this.state.open}
-          handleClose={handleClose}
+          handleClose={handleEditClose}
         ></MemberEditDialog>
       </>
     );
