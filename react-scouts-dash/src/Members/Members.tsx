@@ -51,30 +51,26 @@ const GetMembers = ({ userData }: { userData: any }) => {
 };
 type Props = {
   members: Array<Member>;
-  membersRef: any;
+  membersRef: firebase.default.firestore.CollectionReference;
 };
 
 type State = {
   selectedMember: Member;
+  name: string;
   open: boolean;
 };
 class MemberList extends React.Component<Props, State> {
-  //    members,
-  //   membersRef,
-  // }: {
-  //   members: Array<any>;
-  //   membersRef: firebase.default.firestore.CollectionReference;
-  // }
   constructor(props: any) {
     super(props);
     this.state = {
       selectedMember: {} as Member,
+      name: '',
       open: false,
     };
   }
   handleClickOpen = (member: Member) => {
     console.log('open');
-    this.setState({ open: true, selectedMember: member });
+    this.setState({ open: true, selectedMember: member, name: member.name });
   };
   render() {
     console.log('this.props', this.props);
@@ -82,14 +78,14 @@ class MemberList extends React.Component<Props, State> {
     const handleClose = (result: any) => {
       console.log('result', result);
       this.setState({ open: false });
+
+      if (typeof result === 'string') {
+        this.props.membersRef
+          .doc(this.state.selectedMember.id)
+          .set({ name: result });
+      }
     };
-    const edit = (
-      id: string,
-      ref: firebase.default.firestore.CollectionReference
-    ) => {
-      // ref.doc(id).set();
-      console.log('id', id);
-    };
+
     console.log('members', this.props.members);
 
     return (
