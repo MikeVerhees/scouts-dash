@@ -102,7 +102,7 @@ class MemberList extends React.Component<Props, State> {
         <List>
           {this.props.members.map((member: Member) => {
             return (
-              <ListItem onClick={() => this.OpenDetails(member)}>
+              <ListItem>
                 <ListItemText primary={member.name} />
                 <ListItemSecondaryAction>
                   <IconButton
